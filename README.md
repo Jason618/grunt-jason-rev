@@ -1,7 +1,7 @@
 # grunt-jason-rev
 
 > 将html文件里引用的JS,CSS文件路径使用HASH路径替换
-[使用替换前,需要自己手动生成带HASH的文件]
+> [使用替换前,需要自己手动生成带HASH的文件]
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -41,7 +41,7 @@ grunt.initConfig({
 
 ### Options
 
-#### options.lenth
+#### options.length
 Type: `int`
 Default value: 8
 
@@ -59,6 +59,8 @@ Default value: 'dm5'
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+##git
+https://github.com/Jason618/grunt-jason-rev
 
 ## Release History
 _v0.1.0_
