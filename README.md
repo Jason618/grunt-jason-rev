@@ -1,6 +1,6 @@
-# grunt-my-rev
+# grunt-jason-rev
 
-> revisioning static resource in my project
+> 将html文件里引用的JS,CSS文件路径使用HASH路径替换
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -8,7 +8,7 @@ This plugin requires Grunt `~0.4.5`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-my-rev --save-dev
+npm install grunt-jason-rev --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
@@ -17,73 +17,47 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-my-rev');
 ```
 
-## The "my_rev" task
+## The "jason_rev" task
 
 ### Overview
-In your project's Gruntfile, add a section named `my_rev` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `jason_rev` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  my_rev: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
+  jason_rev: {
+      default_options: {
+          options: {},
+          files: [{
+              expand: true,
+              cwd: 'test/',
+              src: ['**/*.html'],
+              dest: 'temp/public'
+          }]
+      }
+          }
 });
 ```
 
 ### Options
 
-#### options.separator
+#### options.lenth
+Type: `int`
+Default value: 8
+
+HASH字符串长度
+
+#### options.algorithm
 Type: `String`
-Default value: `',  '`
+Default value: 'dm5'
 
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
+加密算法
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  my_rev: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  my_rev: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
+执行grunt test  会将test/fixtures/index.html  文件中的js/css文件路径替换为该文件计算HASH之后取8位长度拼接的新的URL
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+_v0.1.0_
