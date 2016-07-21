@@ -14,7 +14,6 @@ var crypto = require("crypto");
 var path = require("path");
 var fs = require("fs");
 var eachAsync = require("each-async");
-var chalk = require("chalk");
 
 module.exports = function (grunt) {
 
