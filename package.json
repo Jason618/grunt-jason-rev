@@ -1,7 +1,7 @@
 {
   "name": "grunt-jason-rev",
   "description": "revisioning static resource in my project",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/Jason618/grunt-jason-rev",
   "author": {
     "name": "Jason",
