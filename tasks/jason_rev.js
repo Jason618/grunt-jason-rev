@@ -25,6 +25,8 @@ module.exports = function (grunt) {
         var options = this.options({
             algorithm: 'md5',
             length: 8,
+            jsExt: '.js',
+            cssExt: '.css',
             fileExt: ".html",
             jsUrlReg: /<script[^\>]+src=['"]([^"']+)["']/gmi,  //   查找 html 文件中的 JS 文件
             cssUrlReg: /<link[^\>]+href=['"]([^"']+)["']/gmi   //  查找 html 文件中的 CSS 文件
@@ -106,10 +108,14 @@ module.exports = function (grunt) {
                     grunt.log.writeln("正在执行资源替换的html文件:" + file);
                     var jsMatchString, cssMatchString, jsUrls = [], cssUrls = [];
                     while ((jsMatchString = options.jsUrlReg.exec(content)) && jsMatchString != null) {
-                        jsUrls.push(jsMatchString[1] ? jsMatchString[1] : "");
+                        if (jsMatchString[1] && jsMatchString[1].slice(-3) == options.jsExt) {
+                            jsUrls.push(jsMatchString[1]);
+                        }
                     }
                     while ((cssMatchString = options.cssUrlReg.exec(content)) && cssMatchString != null) {
-                        cssUrls.push(cssMatchString[1] ? cssMatchString[1] : "");
+                        if (cssMatchString[1] && cssMatchString[1].slice(-4) == options.cssExt) {
+                            jsUrls.push(cssMatchString[1]);
+                        }
                     }
                     var replaceContent;
                     jsUrls.forEach(function (ele, index) {
@@ -117,20 +123,23 @@ module.exports = function (grunt) {
                         //获取带HASH的文件路径
                         var hashUrl = getStaticFileUrl(ele, file);
                         if (hashUrl == "no") {
-                            grunt.fail.warn("资源路径出错--" + ele);
+                            // grunt.fail.warn("资源路径出错--" + ele);
+                            grunt.log.error("资源路径出错--" + ele);
+                        }else{
+                            replaceContent = content.replace(ele, hashUrl);
+                            content = replaceContent;
                         }
-                        replaceContent = content.replace(ele, hashUrl);
-                        content = replaceContent;
                     });
                     cssUrls.forEach(function (ele, index) {
                         grunt.log.writeln("将要替换的页面url: " + ele);
                         //获取带HASH的文件路径
                         var hashUrl = getStaticFileUrl(ele, file);
                         if (hashUrl == "no") {
-                            grunt.fail.warn("资源路径出错--" + ele);
+                            grunt.log.error("资源路径出错--" + ele);
+                        }else{
+                            replaceContent = content.replace(ele, hashUrl);
+                            content = replaceContent;
                         }
-                        replaceContent = content.replace(ele, hashUrl);
-                        content = replaceContent;
                     });
                     //将替换好的字符串重写写入文件
                     grunt.file.write(file, replaceContent);
