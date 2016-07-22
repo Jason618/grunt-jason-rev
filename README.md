@@ -64,3 +64,5 @@ https://github.com/Jason618/grunt-jason-rev
 
 ## Release History
 _v0.1.0_
+_v0.1.1_
+
