@@ -37,7 +37,7 @@ module.exports = function (grunt) {
          * @param url  页面内静态资源的url
          * @param  fileUrl  html文件的url
          * */
-        function getStaticFileUrl(url, fileUrl,extname) {
+        function getStaticFileUrl(url, fileUrl, extname) {
             var htmlPathArray = fileUrl.split("/");
             var htmlPathArrayLen = htmlPathArray.length;
 
@@ -77,7 +77,7 @@ module.exports = function (grunt) {
             //匹配hash 文件
             var hash = crypto.createHash(options.algorithm).update(fs.readFileSync(returnUrl)).digest('hex');
             var suffix = hash.slice(0, options.length);
-            var hashFileUrl = url.slice(0, -2) + suffix + extname;
+            var hashFileUrl = url.slice(0, -(extname.length - 1)) + suffix + extname;
 
             return hashFileUrl;
             //相对路径的情况   /js/index.js
@@ -121,7 +121,7 @@ module.exports = function (grunt) {
                     jsUrls.forEach(function (ele, index) {
                         grunt.log.writeln("将要替换的页面url: " + ele);
                         //获取带HASH的文件路径
-                        var hashUrl = getStaticFileUrl(ele, file,options.jsExt);
+                        var hashUrl = getStaticFileUrl(ele, file, options.jsExt);
                         if (hashUrl == "no") {
                             // grunt.fail.warn("资源路径出错--" + ele);
                             grunt.log.error("资源路径出错--" + ele);
